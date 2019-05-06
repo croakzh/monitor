@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.croakzh.webfront.mapper.NaturelogMapper">
+
+    <sql id="selectSQL">
+		id, detail, serverid, addtime
+	</sql>
+
+    <sql id="whereSQL">
+        where 1=1
+        <if test="id != null ">
+            <![CDATA[
+				and a.id = #{id}
+			]]>
+        </if>
+        <if test="detail != null ">
+            <![CDATA[
+				and a.detail = #{detail}
+			]]>
+        </if>
+        <if test="serverid != null ">
+            <![CDATA[
+				and a.serverid = #{serverid}
+			]]>
+        </if>
+        <if test="addtime != null ">
+            <![CDATA[
+				and a.addtime = #{addtime}
+			]]>
+        </if>
+    </sql>
+
+    <select id="countNaturelogs" resultType="Integer" parameterType="NaturelogPo">
+        select count(*) from mt_naturelog a
+        <include refid="whereSQL">
+        </include>
+        <if test="term != null and '' != term">
+            <![CDATA[
+              and (a.detail like concat(concat('%', #{term}),'%'))
+			]]>
+        </if>
+    </select>
+
+    <select id="findAllNaturelogs" resultType="NaturelogPo" parameterType="NaturelogPo">
+        select
+        <include refid="selectSQL"/>
+        from mt_naturelog a
+    </select>
+
+    <select id="findNaturelogsByPage" resultType="NaturelogPo" parameterType="NaturelogPo">
+        select
+        <include refid="selectSQL"/>
+        from mt_naturelog a
+        <include refid="whereSQL"/>
+        <if test="term != null and '' != term">
+            <![CDATA[
+              and (a.detail like concat(concat('%', #{term}),'%'))
+			]]>
+        </if>
+        <choose>
+            <when test="sortord != null and '' != sortord">
+                order by a.${sortord}
+            </when>
+            <otherwise>
+                order by a.id desc
+            </otherwise>
+        </choose>
+        <if test="pagestart != null and pagesize != null">
+            limit #{pagestart}, #{pagesize}
+        </if>
+    </select>
+
+    <select id="getNaturelog" resultType="NaturelogPo" parameterType="Integer">
+        select
+        <include refid="selectSQL"/>
+        from mt_naturelog a
+        where a.id = #{id}
+    </select>
+
+    <insert id="addNaturelog" parameterType="NaturelogPo">
+        insert into mt_naturelog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="detail != null ">detail,</if>
+            <if test="serverid != null ">serverid,</if>
+            <if test="addtime != null ">addtime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id,jdbcType=INTEGER},</if>
+            <if test="detail != null ">#{detail,jdbcType=VARCHAR},</if>
+            <if test="serverid != null ">#{serverid,jdbcType=INTEGER},</if>
+            <if test="addtime != null ">#{addtime,jdbcType=VARCHAR},</if>
+        </trim>
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="updateNaturelog" parameterType="NaturelogPo">
+        update mt_naturelog
+        <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">
+            <if test="id != null">
+                <![CDATA[
+					id = #{id,jdbcType=INTEGER},
+				]]>
+            </if>
+            <if test="detail != null">
+                <![CDATA[
+					detail = #{detail,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="serverid != null">
+                <![CDATA[
+					serverid = #{serverid,jdbcType=INTEGER},
+				]]>
+            </if>
+            <if test="addtime != null">
+                <![CDATA[
+					addtime = #{addtime,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </update>
+
+    <delete id="deleteNaturelog" parameterType="Integer">
+		delete from mt_naturelog
+		where id= #{id}
+	</delete>
+
+</mapper>

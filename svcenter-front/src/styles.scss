@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+/*你可以添加全局的样式到这个文件中，并且可以引入其它的样式文件*/
+
+/* ======以下是第三方scss与css引入======*/
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+@import '../node_modules/animate.css/animate.min.css';
+
+
+/* ======以下是自定义scss引入======*/
+//公共样式
+@import './assets/scss/base/app-base.scss';
+@import './assets/scss/base/common.scss';
+@import './assets/scss/base/zt.scss';
+@import './assets/scss/base/sundax.scss';
+
+//样式重写
+@import './assets/scss/overwrite/antd.scss';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

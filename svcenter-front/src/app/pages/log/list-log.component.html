@@ -1,0 +1,72 @@
+<div class="sd-head">
+    <div class="sd-title-s">监控管理工具 / 应用日志监控</div>
+    <div class="sd-title-m">应用日志监控管理</div>
+</div>
+<div class="sd-body">
+    <div class="animated sd-content">
+        <form nz-form class="ant-advanced-search-form" [formGroup]="searchForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="2">检索条件</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <input nz-input type="text" formControlName="condition" placeholder="请输入检索条件" (ngModelChange)="search()">
+                </nz-form-control>
+                <nz-form-label [nzSpan]="2">服务器选择</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <nz-select name="select-error" formControlName="selectServer" (ngModelChange)="selectServer()">
+                        <nz-option nzValue="" nzLabel="全部"></nz-option>
+                        <nz-option *ngFor="let server of servers" [nzValue]="server.serverid"
+                                   [nzLabel]="server.hostname"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                <nz-form-label [nzSpan]="2">应用选择</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <nz-select name="select-error" formControlName="selectApp" (ngModelChange)="search()">
+                        <nz-option nzValue="" nzLabel="全部"></nz-option>
+                        <nz-option *ngFor="let option of applications" [nzValue]="option.applicationid"
+                                   [nzLabel]="option.applicationname"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                <div nz-col [nzSpan]="6" style="text-align: right;line-height: 39.9999px;">
+                    <button nz-button nzType="primary" (click)="search()">查询</button>
+                    <button nz-button (click)="resetForm()">重置</button>
+                </div>
+
+            </nz-form-item>
+
+        </form>
+        <nz-table class="sd-main-table has-detail" [nzLoading]="tableData.loading" [nzFrontPagination]="false"
+                  [nzShowPagination]="false" [nzData]="tableData.data">
+            <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+                <th nzShowSort="{{column.isSort}}" nzSortKey="{{column.field}}" *ngFor="let column of columns">
+                    {{column.title}}
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of tableData.data">
+                <td
+                    width="55%">
+                    <div id="changeColor" (click)="showDetail(data)">{{columns[0].field | fieldRender :
+                        columns[0]:data}}
+                    </div>
+                </td>
+                <td width="15%">{{columns[1].field | fieldRender : columns[1]:data}}</td>
+                <td width="15%">{{columns[2].field | fieldRender : columns[2]:data}}</td>
+                <td width="15%">{{columns[3].field | fieldRender : columns[3]:data}}</td>
+            </tr>
+            </tbody>
+        </nz-table>
+        <div class="sd-table-foot">
+            <zt-pager [nzTotal]="tableData.total" [(nzPageIndex)]="tableData.curpage"
+                      [(nzPageSize)]="tableData.pagesize"
+                      (nzPageIndexChange)="loadTableData()" (nzPageSizeChange)="loadTableData()">
+            </zt-pager>
+        </div>
+    </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="错误日志内容展示" (nzOnCancel)="handleCancel()" (nzOnOk)="handleCancel()"
+          [nzWidth]="1000"
+          [nzCancelText]="null">
+    <textarea rows="20" nz-input [(ngModel)]="contentDetail"></textarea>
+</nz-modal>

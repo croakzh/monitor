@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.croakzh.webfront.mapper.GroupMapper">
+
+    <sql id="selectSQL">
+		groupid, groupname, description, addtime, updatetime
+	</sql>
+
+    <sql id="whereSQL">
+        where 1=1
+        <if test="groupid != null ">
+            <![CDATA[
+				and a.groupid = #{groupid}
+			]]>
+        </if>
+        <if test="groupname != null ">
+            <![CDATA[
+				and a.groupname = #{groupname}
+			]]>
+        </if>
+        <if test="description != null ">
+            <![CDATA[
+				and a.description = #{description}
+			]]>
+        </if>
+        <if test="addtime != null ">
+            <![CDATA[
+				and a.addtime = #{addtime}
+			]]>
+        </if>
+        <if test="updatetime != null ">
+            <![CDATA[
+				and a.updatetime = #{updatetime}
+			]]>
+        </if>
+    </sql>
+
+    <select id="countGroups" resultType="Integer" parameterType="GroupPo">
+        select count(*) from mt_group a
+        <include refid="whereSQL">
+        </include>
+        <if test="term != null and '' != term">
+            <![CDATA[
+				and (a.groupname like concat(concat('%', #{term}),'%')
+			]]>
+        </if>
+    </select>
+
+    <select id="findAllGroups" resultType="GroupPo" parameterType="GroupPo">
+        select
+        <include refid="selectSQL"/>
+        from mt_group a
+    </select>
+
+    <select id="findGroupsByPage" resultType="GroupPo" parameterType="GroupPo">
+        select
+        <include refid="selectSQL"/>
+        from mt_group a
+        <include refid="whereSQL"/>
+        <if test="term != null and '' != term">
+            <![CDATA[
+				and (a.groupname like concat(concat('%', #{term}),'%')
+			]]>
+        </if>
+        <choose>
+            <when test="sortord != null and '' != sortord">
+                order by a.${sortord}
+            </when>
+            <otherwise>
+                order by a.groupid desc
+            </otherwise>
+        </choose>
+        <if test="pagestart != null and pagesize != null">
+            limit #{pagestart}, #{pagesize}
+        </if>
+    </select>
+
+    <select id="getGroup" resultType="GroupPo" parameterType="Integer">
+        select
+        <include refid="selectSQL"/>
+        from mt_group a
+        where a.groupid = #{groupid}
+    </select>
+
+    <insert id="addGroup" parameterType="GroupPo">
+        insert into mt_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupid != null ">groupid,</if>
+            <if test="groupname != null ">groupname,</if>
+            <if test="description != null ">description,</if>
+            <if test="addtime != null ">addtime,</if>
+            <if test="updatetime != null ">updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupid != null ">#{groupid,jdbcType=INTEGER},</if>
+            <if test="groupname != null ">#{groupname,jdbcType=VARCHAR},</if>
+            <if test="description != null ">#{description,jdbcType=VARCHAR},</if>
+            <if test="addtime != null ">#{addtime,jdbcType=VARCHAR},</if>
+            <if test="updatetime != null ">#{updatetime,jdbcType=VARCHAR},</if>
+        </trim>
+        <selectKey keyProperty="groupid" resultType="Integer" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="updateGroup" parameterType="GroupPo">
+        update mt_group
+        <trim prefix="set" suffixOverrides="," suffix=" where groupid = #{groupid} ">
+            <if test="groupid != null">
+                <![CDATA[
+					groupid = #{groupid,jdbcType=INTEGER},
+				]]>
+            </if>
+            <if test="groupname != null">
+                <![CDATA[
+					groupname = #{groupname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="description != null">
+                <![CDATA[
+					description = #{description,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="addtime != null">
+                <![CDATA[
+					addtime = #{addtime,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="updatetime != null">
+                <![CDATA[
+					updatetime = #{updatetime,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </update>
+
+    <delete id="deleteGroup" parameterType="Integer">
+		delete from mt_group
+		where groupid= #{groupid}
+	</delete>
+
+</mapper>

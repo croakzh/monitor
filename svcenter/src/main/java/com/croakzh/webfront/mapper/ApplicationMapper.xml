@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.croakzh.webfront.mapper.ApplicationMapper">
+
+    <sql id="selectSQL">
+		applicationid, serverid, applicationname, appstatus, developpath, description, addtime, updatetime
+	</sql>
+
+    <sql id="contentSQL">
+        a.applicationid, a.serverid, a.applicationname, a.appstatus, a.developpath, a.description, a.addtime,
+        a.updatetime,
+        b.host, b.hostname
+    </sql>
+
+    <sql id="whereSQL">
+        where 1=1
+        <if test="applicationid != null ">
+            <![CDATA[
+				and a.applicationid = #{applicationid}
+			]]>
+        </if>
+        <if test="serverid != null ">
+            <![CDATA[
+				and a.serverid = #{serverid}
+			]]>
+        </if>
+        <if test="applicationname != null ">
+            <![CDATA[
+				and a.applicationname = #{applicationname}
+			]]>
+        </if>
+        <if test="appstatus != null ">
+            <![CDATA[
+				and a.appstatus = #{appstatus}
+			]]>
+        </if>
+        <if test="developpath != null ">
+            <![CDATA[
+				and a.developpath = #{developpath}
+			]]>
+        </if>
+        <if test="description != null ">
+            <![CDATA[
+				and a.description = #{description}
+			]]>
+        </if>
+        <if test="addtime != null ">
+            <![CDATA[
+				and a.addtime = #{addtime}
+			]]>
+        </if>
+        <if test="updatetime != null ">
+            <![CDATA[
+				and a.updatetime = #{updatetime}
+			]]>
+        </if>
+    </sql>
+
+    <select id="countApplications" resultType="Integer" parameterType="ApplicationPo">
+        select count(*) from mt_application a
+        <include refid="whereSQL">
+        </include>
+        <if test="term != null and '' != term">
+            <![CDATA[
+				and (a.applicationname like concat(concat('%', #{term}),'%') )
+			]]>
+        </if>
+    </select>
+
+    <select id="findAllApplications" resultType="ApplicationPo" parameterType="ApplicationPo">
+        select
+        <include refid="contentSQL"/>
+        from mt_application a
+        left join mt_server b
+        on a.serverid = b.serverid
+    </select>
+
+    <select id="findApplicationsByPage" resultType="ApplicationPo" parameterType="ApplicationPo">
+        select
+        <include refid="contentSQL"/>
+        from mt_application a
+        left join mt_server b
+        on a.serverid = b.serverid
+        <include refid="whereSQL"/>
+        <if test="term != null and '' != term">
+            <![CDATA[
+				and (a.applicationname like concat(concat('%', #{term}),'%') )
+			]]>
+        </if>
+        <choose>
+            <when test="sortord != null and '' != sortord">
+                order by a.${sortord}
+            </when>
+            <otherwise>
+                order by a.applicationid desc
+            </otherwise>
+        </choose>
+        <if test="pagestart != null and pagesize != null">
+            limit #{pagestart}, #{pagesize}
+        </if>
+    </select>
+
+    <select id="getApplication" resultType="ApplicationPo" parameterType="Integer">
+        select
+        <include refid="contentSQL"/>
+        from mt_application a
+        left join mt_server b
+        on a.serverid = b.serverid
+        where a.applicationid = #{applicationid}
+    </select>
+
+    <insert id="addApplication" parameterType="ApplicationPo">
+        insert into mt_application
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="applicationid != null ">applicationid,</if>
+            <if test="serverid != null ">serverid,</if>
+            <if test="applicationname != null ">applicationname,</if>
+            <if test="developpath != null ">developpath,</if>
+            <if test="appstatus != null ">appstatus,</if>
+            <if test="description != null ">description,</if>
+            <if test="addtime != null ">addtime,</if>
+            <if test="updatetime != null ">updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="applicationid != null ">#{applicationid,jdbcType=INTEGER},</if>
+            <if test="serverid != null ">#{serverid,jdbcType=INTEGER},</if>
+            <if test="applicationname != null ">#{applicationname,jdbcType=VARCHAR},</if>
+            <if test="developpath != null ">#{developpath,jdbcType=VARCHAR},</if>
+            <if test="appstatus != null ">#{appstatus,jdbcType=TINYINT},</if>
+            <if test="description != null ">#{description,jdbcType=VARCHAR},</if>
+            <if test="addtime != null ">#{addtime,jdbcType=VARCHAR},</if>
+            <if test="updatetime != null ">#{updatetime,jdbcType=VARCHAR},</if>
+        </trim>
+        <selectKey keyProperty="applicationid" resultType="Integer" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="updateApplication" parameterType="ApplicationPo">
+        update mt_application
+        <trim prefix="set" suffixOverrides="," suffix=" where applicationid = #{applicationid} ">
+            <if test="applicationid != null">
+                <![CDATA[
+					applicationid = #{applicationid,jdbcType=INTEGER},
+				]]>
+            </if>
+            <if test="serverid != null">
+                <![CDATA[
+					serverid = #{serverid,jdbcType=INTEGER},
+				]]>
+            </if>
+            <if test="applicationname != null">
+                <![CDATA[
+					applicationname = #{applicationname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="appstatus != null">
+                <![CDATA[
+					appstatus = #{appstatus,jdbcType=TINYINT},
+				]]>
+            </if>
+            <if test="developpath != null">
+                <![CDATA[
+					developpath = #{developpath,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="description != null">
+                <![CDATA[
+					description = #{description,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="addtime != null">
+                <![CDATA[
+					addtime = #{addtime,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="updatetime != null">
+                <![CDATA[
+					updatetime = #{updatetime,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </update>
+
+    <delete id="deleteApplication" parameterType="Integer">
+		delete from mt_application
+		where applicationid= #{applicationid}
+	</delete>
+
+</mapper>

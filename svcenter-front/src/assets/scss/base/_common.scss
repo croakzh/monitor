@@ -1,0 +1,252 @@
+
+/**内边距**/
+.zt-p5{
+  padding:5px
+}
+.zt-p10{
+  padding:10px
+}
+.zt-p15{
+  padding:15px
+}
+/**外边距**/
+.zt-m5{
+  margin:5px;
+}
+.zt-m10{
+  margin:10px;
+}
+.zt-m15{
+  margin:15px;
+}
+.zt-mt3 {
+  margin-top: 3px;
+}
+.zt-mt5 {
+  margin-top: 5px;
+}
+.zt-mt10 {
+  margin-top: 10px;
+}
+.zt-mt15 {
+  margin-top: 15px;
+}
+.zt-mt20 {
+  margin-top: 20px;
+}
+.zt-mt25 {
+  margin-top: 25px;
+}
+.zt-mt30 {
+  margin-top: 30px;
+}
+.zt-mt50 {
+  margin-top: 50px;
+}
+.zt-mb5 {
+  margin-bottom: 5px;
+}
+.zt-mb10 {
+  margin-bottom: 10px;
+}
+.zt-mb15 {
+  margin-bottom: 15px;
+}
+.zt-mb20{
+  margin-bottom: 20px;
+}
+.zt-ml5 {
+  margin-left: 5px;
+}
+.zt-ml10 {
+  margin-left: 10px;
+}
+.zt-ml15 {
+  margin-left: 15px;
+}
+.zt-ml20 {
+  margin-left: 20px;
+}
+.zt-mr3 {
+  margin-right: 3px;
+}
+.zt-mr5 {
+  margin-right: 5px;
+}
+/**字号**/
+.zt-fs15 {
+  font-size: 15px;
+}
+.zt-fs20 {
+  font-size: 20px;
+}
+.zt-fs25 {
+  font-size: 25px;
+}
+.zt-fs30 {
+  font-size: 30px;
+}
+.zt-fs50 {
+  font-size: 50px;
+}
+
+/**手形**/
+.zt-cursor-pointer {
+  cursor: pointer;
+}
+
+/**自动滚动条**/
+.zt-scroll-y-a{
+  overflow-y: auto;
+}
+/**内容换行**/
+.zt-word-break{
+   word-break:break-all;
+}
+
+/*去除阴影*/
+.zt-not-shadow{
+  -webkit-box-shadow:none;
+	-moz-box-shadow:none;
+	box-shadow: none;
+}
+
+.zt-w-1{
+  width:8.333%
+}
+
+.zt-w-2{
+  width:16.666%
+}
+
+.zt-w-3{
+  width:24.999%
+}
+
+
+.zt-w-4{
+  width:33.332%
+}
+
+
+.zt-w-5{
+  width:41.665%
+}
+
+
+.zt-w-6{
+  width:49.998%
+}
+
+.zt-w-7{
+  width:58.331%
+}
+
+.zt-w-8{
+  width:66.664%
+}
+
+
+.zt-w-9{
+  width:74.997%
+}
+
+.zt-w-10{
+  width:83.333%
+}
+
+.zt-w-11{
+  width:91.663%
+}
+
+
+.zt-w-12{
+  width:100%
+}
+
+ .fr{
+     float:right;
+ }
+
+ .fl{
+     float:left;
+ }
+
+ .allDelete[disabled], .allDelete.disabled {
+    border: 1px solid #c1cbd7;
+    background-color: #f6f8f9;
+    color: #c1cbd7;
+    cursor: not-allowed;
+}
+
+.checkallDelete {
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    line-height: 30px;
+    margin-top: 14px;
+}
+
+.allDelete {
+    line-height: 28px;
+    margin-top: 14px;
+    padding: 0px 20px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    display: inline-block;
+    color: #7a7a7a;
+}
+
+.detailPop {
+    padding-top: 0px;
+    top: 0;
+    width: 626px;
+    right: -626px;
+    height: 100%;
+    border-left: thin solid lightgrey;
+    background-color: white;
+    overflow-y: scroll;
+    position: absolute;
+    z-index: 9;
+}
+
+.detailPop.aniIn {
+    -webkit-animation: inShow .1s forwards;
+    -moz-animation: inShow .1s forwards;
+    -o-animation: inShow .1s forwards;
+    animation: inShow .1s forwards;
+}
+
+@keyframes inShow {
+    0% {
+        right: -626px;
+    }
+    100% {
+        right: 15px;
+    }
+}
+@-webkit-keyframes inShow {
+    0% {
+        right: -626px;
+    }
+    100% {
+        right: 15px;
+    }
+}
+
+.hr-line-thin {
+    background-color: rgba(0, 0, 0, 0);
+    border-style: solid !important;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-width: 1px 0 0 0;
+    border-color: #e5e6e7;
+}
+
+.border-collapse table{
+    border-collapse: collapse;
+}
+
+.tabHeaderWhite .ant-tabs-nav-container{
+    background: #fff;
+}

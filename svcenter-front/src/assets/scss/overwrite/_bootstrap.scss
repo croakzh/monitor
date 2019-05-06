@@ -1,0 +1,274 @@
+//=================bootstrap================
+//btn
+.btn {
+	-webkit-box-shadow: $zt-btn-shadow;
+	box-shadow: $zt-btn-shadow;
+	-moz-box-shadow: $zt-btn-shadow;
+	text-transform: uppercase;
+	-webkit-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	transition: all 0.4s;
+}
+
+.btn-light {
+	-webkit-background-size: 200% 200%;
+	background-size: 200% 200%;
+	background-position: 50%;
+	border:1px solid $zt-color-gary
+}
+
+
+.btn-light:active {
+	border-color: $zt-bootstrap-light-deep;
+	background-image: -webkit-radial-gradient(circle, $zt-bootstrap-light-deep 10%, $zt-bootstrap-light 11%);
+	background-image: -o-radial-gradient(circle, $zt-bootstrap-light-deep 10%, $zt-bootstrap-light 11%);
+	background-image: radial-gradient(circle, $zt-bootstrap-light-deep 10%, $zt-bootstrap-light 11%);
+	background-repeat: no-repeat;
+	-webkit-background-size: 1000% 1000%;
+	background-size: 1000% 1000%;
+}
+
+.btn-light.disabled, .btn-light:disabled {
+   border-color: $zt-bootstrap-light-deep;
+}
+
+
+.btn-primary {
+	-webkit-background-size: 200% 200%;
+	background-size: 200% 200%;
+	background-position: 50%;
+}
+
+.btn-primary:active {
+	background-color: $zt-bootstrap-primary-deep;
+	border-color: $zt-bootstrap-primary-deep;
+	background-image: -webkit-radial-gradient(circle, $zt-bootstrap-primary-deep 10%, $zt-bootstrap-primary 11%);
+	background-image: -o-radial-gradient(circle, $zt-bootstrap-primary-deep 10%, $zt-bootstrap-primary 11%);
+	background-image: radial-gradient(circle, $zt-bootstrap-primary-deep 10%, $zt-bootstrap-primary 11%);
+	background-repeat: no-repeat;
+	-webkit-background-size: 1000% 1000%;
+	background-size: 1000% 1000%;
+}
+
+.btn-success {
+	-webkit-background-size: 200% 200%;
+	background-size: 200% 200%;
+	background-position: 50%;
+}
+
+.btn-success:active {
+	background-color: $zt-bootstrap-success-deep;
+	border-color: $zt-bootstrap-success-deep;
+	background-image: -webkit-radial-gradient(circle, $zt-bootstrap-success-deep 10%, $zt-bootstrap-success 11%);
+	background-image: -o-radial-gradient(circle, $zt-bootstrap-success-deep 10%, $zt-bootstrap-success 11%);
+	background-image: radial-gradient(circle, $zt-bootstrap-success-deep 10%, $zt-bootstrap-success 11%);
+	background-repeat: no-repeat;
+	-webkit-background-size: 1000% 1000%;
+	background-size: 1000% 1000%;
+}
+
+.btn-info {
+	-webkit-background-size: 200% 200%;
+	background-size: 200% 200%;
+	background-position: 50%;
+	color:$zt-color-white;
+}
+
+.btn-info:hover{
+	color:$zt-color-white;
+}
+
+.btn-info:active {
+	background-color: $zt-bootstrap-info-deep;
+	border-color: $zt-bootstrap-info-deep;
+	background-image: -webkit-radial-gradient(circle, $zt-bootstrap-info-deep 10%, $zt-bootstrap-info 11%);
+	background-image: -o-radial-gradient(circle, $zt-bootstrap-info-deep 10%, $zt-bootstrap-info 11%);
+	background-image: radial-gradient(circle, $zt-bootstrap-info-deep 10%, $zt-bootstrap-info 11%);
+	background-repeat: no-repeat;
+	-webkit-background-size: 1000% 1000%;
+	background-size: 1000% 1000%;
+	color:$zt-color-white !important;
+}
+
+.btn-warning {
+	-webkit-background-size: 200% 200%;
+	background-size: 200% 200%;
+	background-position: 50%;
+	color:$zt-color-white;
+}
+
+.btn-warning:hover{
+	color:$zt-color-white;
+}
+
+.btn-warning:active {
+	background-color: $zt-bootstrap-warning-deep;
+	border-color: $zt-bootstrap-warning-deep;
+	background-image: -webkit-radial-gradient(circle, $zt-bootstrap-warning-deep 10%, $zt-bootstrap-warning 11%);
+	background-image: -o-radial-gradient(circle, $zt-bootstrap-warning-deep 10%, $zt-bootstrap-warning 11%);
+	background-image: radial-gradient(circle, $zt-bootstrap-warning-deep 10%, $zt-bootstrap-warning 11%);
+	background-repeat: no-repeat;
+	-webkit-background-size: 1000% 1000%;
+	background-size: 1000% 1000%;
+	color:$zt-color-white  !important;
+}
+
+.btn-danger {
+	-webkit-background-size: 200% 200%;
+	background-size: 200% 200%;
+	background-position: 50%;
+	color:$zt-color-white;
+}
+
+.btn-danger:hover{
+	color:$zt-color-white;
+}
+
+.btn-danger:active {
+	background-color: $zt-bootstrap-danger-deep;
+	border-color: $zt-bootstrap-danger-deep;
+	background-image: -webkit-radial-gradient(circle, $zt-bootstrap-danger-deep 10%, $zt-bootstrap-danger 11%);
+	background-image: -o-radial-gradient(circle, $zt-bootstrap-danger-deep 10%, $zt-bootstrap-danger 11%);
+	background-image: radial-gradient(circle, $zt-bootstrap-danger-deep  10%, $zt-bootstrap-danger 11%);
+	background-repeat: no-repeat;
+	-webkit-background-size: 1000% 1000%;
+	background-size: 1000% 1000%;
+	color:$zt-color-white  !important;
+}
+
+.btn-secondary{
+	-webkit-background-size: 200% 200%;
+	background-size: 200% 200%;
+	background-position: 50%;
+}
+
+.btn-secondary:active {
+	background-color: $zt-bootstrap-secondary-deep;
+	border-color: $zt-bootstrap-secondary-deep;
+	background-image: -webkit-radial-gradient(circle, $zt-bootstrap-secondary-deep 10%, $zt-bootstrap-secondary 11%);
+	background-image: -o-radial-gradient(circle, $zt-bootstrap-secondary-deep 10%, $zt-bootstrap-secondary 11%);
+	background-image: radial-gradient(circle, $zt-bootstrap-secondary-deep  10%, $zt-bootstrap-secondary 11%);
+	background-repeat: no-repeat;
+	-webkit-background-size: 1000% 1000%;
+	background-size: 1000% 1000%;
+	color:$zt-color-white;
+}
+
+.btn-dark{
+	-webkit-background-size: 200% 200%;
+	background-size: 200% 200%;
+	background-position: 50%;
+}
+
+.btn-dark:active {
+	background-color: $zt-bootstrap-dark-deep;
+	border-color: $zt-bootstrap-dark-deep;
+	background-image: -webkit-radial-gradient(circle, $zt-bootstrap-dark-deep 10%, $zt-bootstrap-dark 11%);
+	background-image: -o-radial-gradient(circle, $zt-bootstrap-dark-deep 10%, $zt-bootstrap-dark 11%);
+	background-image: radial-gradient(circle, $zt-bootstrap-dark-deep  10%, $zt-bootstrap-dark 11%);
+	background-repeat: no-repeat;
+	-webkit-background-size: 1000% 1000%;
+	background-size: 1000% 1000%;
+	color:$zt-color-white;
+}
+
+.btn-outline-light {
+	border:1px solid $zt-bootstrap-light-deep;
+	color: $zt-color-black-deep;
+  }
+  
+  .btn-outline-light:hover {
+	color: $zt-color-black-primary;
+	border-color: $zt-bootstrap-light-deep;
+	background: $zt-bootstrap-light-deep
+  }
+  
+
+  
+  .btn-outline-light.disabled, .btn-outline-light:disabled {
+	color:$zt-color-black-secondary;
+	background-color: transparent;
+  }
+
+
+
+.input-group-btn > .btn-primary {
+	border-color: $zt-bootstrap-primary
+}
+
+.input-group-btn > .btn-success {
+	border-color: $zt-bootstrap-success
+}
+
+.input-group-btn > .btn-warning {
+	border-color: $zt-bootstrap-warning
+}
+
+.input-group-btn > .btn-danger {
+	border-color: $zt-bootstrap-danger
+}
+
+.input-group-btn > .btn-info {
+	border-color: $zt-bootstrap-info
+}
+
+.input-group-btn > .btn-secondary {
+	border-color: $zt-bootstrap-secondary
+}
+
+
+.input-group-btn > .btn-dark {
+	border-color: $zt-bootstrap-dark
+}
+
+//=================badge=======================
+.badge-pill {
+	padding-right: 0.6em;
+	padding-left: 0.6em;
+	border-radius: 10rem;
+}
+
+//=================table=======================
+
+.table> thead>tr> th {
+	border-bottom: 0px;
+	padding: 5px;
+	line-height: 30px;
+}
+
+.table> tbody>tr> td {
+	padding: 5px;
+	line-height: 30px;
+}
+
+//=================alert=======================
+.alert-light{
+	border:1px solid $zt-color-gary
+}
+
+
+//=================badge-warning=======================
+.badge-warning{
+  color:$zt-color-white;
+}
+
+.badge-light{
+	border:1px solid $zt-color-gary;
+}
+
+.badge-info{
+  color:$zt-color-white;
+}
+
+//=================datepicker=======================
+.ngb-dp-day{
+	.btn-light{
+		border:0px
+	}
+}
+
+//=================ng-bootstrap================
+//datepicker
+.ngb-dp-header {
+	background-color: $zt-color-gray-primary;
+}

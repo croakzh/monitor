@@ -1,0 +1,68 @@
+.w50 {
+    width: 50%;
+}
+
+.w100 {
+    width: 100%
+}
+
+.detail-group {
+    display: inline-block;
+    margin-bottom: 24px;
+
+    .detail-title {
+        width: 75px;
+        height: 32px;
+        font-size: 14px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(0, 0, 0, 0.85);
+        line-height: 32px;
+        display: inline-block;
+    }
+    .detail-input {
+        width: 275px;
+    }
+    .detail-textarea {
+        height: 82px;
+        margin-top: 12px;
+    }
+}
+
+.detail-group:last-child {
+    margin: 0;
+}
+
+.pop-field-group {
+    width: 100%;
+    display: block;
+}
+
+.pop-field-group .pop-field-title {
+    width: 90px;
+    float: left;
+    height: 32px;
+    line-height: 32px;
+}
+
+.pop-field-group .pop-field-input {
+    width: 468px !important;
+}
+
+.pop-field-group .pop-field-textarea {
+    width: 468px !important;
+    height: 88px;
+}
+
+button {
+    margin-left: 8px;
+}
+
+td div {
+    height: 40px;
+    overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+    text-overflow:ellipsis;
+}
+td div:hover {
+    color: #00b7ee;
+}

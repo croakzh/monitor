@@ -1,0 +1,111 @@
+<div class="sd-head">
+    <div class="sd-title-s">监控管理工具 / 服务器应用配置</div>
+    <div class="sd-title-m">服务器应用配置管理</div>
+</div>
+<div class="sd-body">
+    <div class="animated sd-content">
+
+        <form nz-form class="ant-advanced-search-form" [formGroup]="searchForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="2">检索条件</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <input nz-input type="text" formControlName="condition" placeholder="请输入检索条件"
+                           (ngModelChange)="search()">
+                </nz-form-control>
+                <nz-form-label [nzSpan]="2">服务器选择</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <nz-select name="select-error" formControlName="selectServer" (ngModelChange)="search()">
+                        <nz-option nzValue="" nzLabel="全部"></nz-option>
+                        <nz-option *ngFor="let server of servers" [nzValue]="server.serverid"
+                                   [nzLabel]="server.hostname"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                <nz-form-label [nzSpan]="2">应用状态</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <nz-select name="select-error" formControlName="appstatus" (ngModelChange)="search()">
+                        <nz-option nzValue="" nzLabel="全部"></nz-option>
+                        <nz-option nzValue="0" nzLabel="运行中"></nz-option>
+                        <nz-option nzValue="1" nzLabel="未启动"></nz-option>
+                        <nz-option nzValue="2" nzLabel="启动中"></nz-option>
+                        <nz-option nzValue="3" nzLabel="停止中"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                <div nz-col [nzSpan]="6" style="text-align: right;line-height: 39.9999px;">
+                    <button nz-button nzType="primary" (click)="search()">查询</button>
+                    <button nz-button (click)="resetForm()">重置</button>
+                </div>
+
+            </nz-form-item>
+
+        </form>
+
+        <div class="sd-search-box">
+            <div class="sd-simple-search" *ngIf="!showAllSearchTypes">
+                <div class="sd-search-btns">
+                    <a class="sd-button primary mr" (click)="add()">新增</a>
+                </div>
+            </div>
+        </div>
+        <nz-table class="sd-main-table has-detail" [nzLoading]="tableData.loading" [nzFrontPagination]="false"
+                  [nzShowPagination]="false" [nzData]="tableData.data">
+            <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+                <th nzShowSort="{{column.isSort}}" nzSortKey="{{column.field}}" *ngFor="let column of columns">
+                    {{column.title}}
+                </th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of tableData.data;let i = index">
+                <!--<td *ngFor="let column of columns">-->
+                <!--{{column.field | fieldRender : column:data}}-->
+                <!--</td>-->
+                <td width="11%">{{columns[0].field | fieldRender : columns[0]:data}}</td>
+                <td width="20%">{{columns[1].field | fieldRender : columns[1]:data}}</td>
+                <td width="15%">{{columns[2].field | fieldRender : columns[2]:data}}</td>
+                <td width="8%"><img _ngcontent-c1="" class="user-avatar" src="{{columns[3].field | statusRender :
+                    columns[3]:data}}">{{columns[3].field | fieldRender : columns[3]:data}}
+                </td>
+                <td width="15%">{{columns[4].field | fieldRender : columns[4]:data}}</td>
+                <td width="9%">{{columns[5].field | fieldRender : columns[5]:data}}</td>
+                <td>
+                    <a class="zt-m5" (click)="update(data)">修改</a>
+                    <a class="zt-m5" (click)="delete(data)">删除</a>
+                    <a class="zt-m5" (click)="release(data)">发布</a>
+                    <a class="zt-m5" (click)="setup(data)">{{columns[3].field | setRender : columns[3]:data}}</a>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+        <div class="sd-table-foot">
+            <zt-pager [nzTotal]="tableData.total" [(nzPageIndex)]="tableData.curpage"
+                      [(nzPageSize)]="tableData.pagesize"
+                      (nzPageIndexChange)="loadTableData()" (nzPageSizeChange)="loadTableData()">
+            </zt-pager>
+        </div>
+    </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="应用发布" (nzOnCancel)="handleCancel()" [nzFooter]="modalFooter"
+          [nzWidth]="500"
+          [nzCancelText]="null">
+    <label>发布文件上传</label>
+    <nz-upload
+        nzType="drag"
+        nzMultiple = "true"
+        [nzLimit]="1"
+        [(nzFileList)]="fileList"
+        [nzBeforeUpload]="beforeUpload"
+        nzAction="http://47.99.37.210:10030/svcenter/upload"
+        (nzChange)="handleChange($event)">
+        <p class="ant-upload-drag-icon">
+            <i nz-icon type="inbox"></i>
+        </p>
+        <p class="ant-upload-text">点击或者拖动文件到此片区域上传文件</p>
+        <p class="ant-upload-hint">请确保文件内容正确后进行上传</p>
+    </nz-upload>
+    <ng-template #modalFooter>
+        <button nz-button nzType="default" (click)="handleCancel()">取消</button>
+        <button nz-button nzType="primary" (click)="submitRelease()">发布</button>
+    </ng-template>
+</nz-modal>

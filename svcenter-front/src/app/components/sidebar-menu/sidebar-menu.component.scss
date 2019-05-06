@@ -1,0 +1,117 @@
+@import '../../../assets/scss/base/app-base.scss';
+.zt-nav {
+    margin-left: 0px;
+    height: calc(100% - 50px);
+    font-size: 12px;
+    .zt-sidebar-menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        a {
+            color: $zt-color-gray-deep;
+            text-decoration: none;
+            border: 0px;
+        }
+        &>li {
+            position: relative;
+            margin: 0;
+            padding: 14px 20px;
+            ;
+            &:hover {
+                &>a {
+                    color: $zt-color-gray-deep;
+                    border: 0px;
+                }
+            }
+            &.active {
+                &>a {
+                    color: $zt-color-gray-deep;
+                    border: 0px;
+                }
+            }
+            &>a {
+                display: block;
+                // border-left: 3px solid transparent;
+                color: #929ca5;
+                border: 0px;
+                &:hover {
+                    color: $zt-color-white;
+                    -webkit-transition: 0.3s;
+                    transition: 0.3s;
+                    -moz-transition: 0.3s;
+                    -webkit-transition: 0.3s;
+                    -o-transition: 0.3s;
+                    cursor: pointer;
+                }
+                &>.fa {
+                    width: 20px;
+                }
+            }
+        }
+    }
+    ul{
+        background:rgba(0,0,0,0.85);
+        color:#929ca5;
+    }
+    ul[nz-menu]{
+        border-right: none;
+        [title]{
+            font-size:12px;
+            font-family: "Microsoft YaHei","open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+            i.icon{
+                margin-right: 12px;
+
+                img{
+                    margin-top:-2px;
+                }
+            }
+        }
+    }
+
+}
+
+:host.collasped{
+    width:50px;
+
+    .nav-label{
+        display:none;
+    }
+
+    span[title] span{
+        display: none;
+    }
+}
+
+
+
+.zt-nav-top {
+    a {
+        height: 44px;
+        position: relative;
+        display: block;
+        padding: 14px 20px;
+        line-height: 44px;
+        width: 100%;
+        text-align: center;
+    }
+    span {
+        float: left;
+        line-height: 16px;
+        margin-left: 19px;
+        font-size:12px;
+    }
+}
+
+.icon-nav {
+    background: url("../../../assets/img/icon_Website_navigation.png");
+    width: 12px;
+    height: 10px;
+    float: right;
+    margin-top: 1.5px;
+}
+
+.submenu:host{
+    background:rgba(0,0,0,0.85);
+    color:#fff;
+}

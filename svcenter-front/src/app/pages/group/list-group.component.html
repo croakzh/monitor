@@ -1,0 +1,43 @@
+<div class="sd-head">
+    <div class="sd-title-s">监控管理工具 / 服务器组配置</div>
+    <div class="sd-title-m">服务器组配置管理</div>
+</div>
+<div class="sd-body">
+    <div class="animated sd-content">
+        <div class="sd-search-box">
+            <div class="sd-simple-search" *ngIf="!showAllSearchTypes">
+                <div class="sd-search-btns">
+                    <a class="sd-button primary mr" (click)="add()">新增</a>
+                </div>
+            </div>
+        </div>
+        <nz-table class="sd-main-table has-detail" [nzLoading]="tableData.loading" [nzFrontPagination]="false"
+                  [nzShowPagination]="false" [nzData]="tableData.data">
+            <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+                <th nzShowSort="{{column.isSort}}" nzSortKey="{{column.field}}" *ngFor="let column of columns">
+                    {{column.title}}
+                </th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of tableData.data;let i = index">
+                <td *ngFor="let column of columns">
+                    {{column.field | fieldRender : column:data}}
+                </td>
+                <td>
+                    <a (click)="update(data)">修改</a>
+                    <a class="zt-m10" (click)="delete(data);">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+        <div class="sd-table-foot">
+            <zt-pager [nzTotal]="tableData.total" [(nzPageIndex)]="tableData.curpage"
+                      [(nzPageSize)]="tableData.pagesize"
+                      (nzPageIndexChange)="loadTableData()" (nzPageSizeChange)="loadTableData()">
+            </zt-pager>
+        </div>
+    </div>
+</div>

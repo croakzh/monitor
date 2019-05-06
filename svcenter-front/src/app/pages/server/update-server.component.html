@@ -1,0 +1,116 @@
+<div class="sd-head">
+    <div class="sd-title-s">监控管理工具 / 服务器监控</div>
+    <div class="sd-title-m">修改服务器监控</div>
+</div>
+<div class="sd-body">
+    <div class="animated sd-content">
+        <form nz-form [formGroup]="form" class="common-formgroup">
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="host" nzRequired>服务器ip
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="host" id="host" placeholder="必填">
+                    <nz-form-explain *ngIf="form.get('host').dirty && form.get('host').errors">
+                        <ng-container *ngIf="form.get('host').hasError('required')">
+                            请输入服务器ip
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="hostname" nzRequired>服务器名称
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="hostname" id="hostname" placeholder="必填,最大长度为64">
+                    <nz-form-explain *ngIf="form.get('hostname').dirty && form.get('hostname').errors">
+                        <ng-container *ngIf="form.get('hostname').hasError('required')">
+                            请输入服务器名称
+                        </ng-container>
+                        <ng-container *ngIf="form.get('hostname').hasError('maxlength')">
+                            服务器名称长度不能超过64
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="groupid">权限组名
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <nz-select name="select-error" formControlName="groupid">
+                        <nz-option *ngFor="let option of groups" [nzValue]="option.groupid"
+                                   [nzLabel]="option.groupname"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="description">描述
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <textarea formControlName="description" id="description" nz-input rows="6"
+                              placeholder="最大长度为255"></textarea>
+                    <nz-form-explain *ngIf="form.get('description').dirty && form.get('description').errors">
+                        <ng-container *ngIf="form.get('description').hasError('maxlength')">
+                            描述长度不能超过255
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="sshport" nzRequired>连接端口
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="sshport" id="sshport" placeholder="必填">
+                    <nz-form-explain *ngIf="form.get('sshport').dirty && form.get('sshport').errors">
+                        <ng-container *ngIf="form.get('sshport').hasError('required')">
+                            请输入连接端口
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="sshname" nzRequired>连接用户名
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="sshname" id="sshname" placeholder="必填,最大长度为64">
+                    <nz-form-explain *ngIf="form.get('sshname').dirty && form.get('sshname').errors">
+                        <ng-container *ngIf="form.get('sshname').hasError('required')">
+                            请输入连接用户名
+                        </ng-container>
+                        <ng-container *ngIf="form.get('sshname').hasError('maxlength')">
+                            连接用户名长度不能超过64
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="sshpwd" nzRequired>连接密码
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="sshpwd" id="sshpwd" placeholder="必填,最大长度为64">
+                    <nz-form-explain *ngIf="form.get('sshpwd').dirty && form.get('sshpwd').errors">
+                        <ng-container *ngIf="form.get('sshpwd').hasError('required')">
+                            请输入连接密码
+                        </ng-container>
+                        <ng-container *ngIf="form.get('sshpwd').hasError('maxlength')">
+                            连接密码长度不能超过64
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="shells">自定义脚本集合
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="shells" id="shells" placeholder="请输入自定义脚本名称，已逗号隔开">
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item nz-row style="margin-bottom:8px;">
+                <nz-form-control [nzOffset]="16" [nzSpan]="12">
+                    <button nz-button nzType="dashed" (click)="test()" [nzLoading]="loadingTest">测试连接</button>
+                    <button nz-button nzType="primary" (click)="submitForm()">提交</button>
+                    <button nz-button (click)="back()">取消</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+<div class="sd-head">
+    <div class="sd-title-s">监控管理工具 / 服务器监控</div>
+    <div class="sd-title-m">服务器监控管理</div>
+</div>
+<div class="sd-body">
+    <div class="animated sd-content">
+
+        <form nz-form class="ant-advanced-search-form" [formGroup]="searchForm">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="2">检索条件</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <input nz-input type="text" formControlName="condition" placeholder="请输入检索条件"
+                           (ngModelChange)="search()">
+                </nz-form-control>
+                <nz-form-label [nzSpan]="2">计算机组</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <nz-select name="select-error" formControlName="selectGroup" (ngModelChange)="search()">
+                        <nz-option nzValue="" nzLabel="全部"></nz-option>
+                        <nz-option *ngFor="let option of groups" [nzValue]="option.groupid"
+                                   [nzLabel]="option.groupname"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                <nz-form-label [nzSpan]="2">登录状态</nz-form-label>
+                <nz-form-control [nzSpan]="4">
+                    <nz-select name="select-error" formControlName="loginStatus" (ngModelChange)="search()">
+                        <nz-option nzValue="" nzLabel="全部"></nz-option>
+                        <nz-option nzValue="0" nzLabel="在线"></nz-option>
+                        <nz-option nzValue="1" nzLabel="离线"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+                <div nz-col [nzSpan]="6" style="text-align: right;line-height: 39.9999px;">
+                    <button nz-button nzType="primary" (click)="search()">查询</button>
+                    <button nz-button (click)="resetForm()">重置</button>
+                </div>
+
+            </nz-form-item>
+
+        </form>
+
+        <div class="sd-search-box">
+            <div class="sd-simple-search" *ngIf="!showAllSearchTypes">
+                <div class="sd-search-btns">
+                    <a class="sd-button primary mr" (click)="add()">新增</a>
+                </div>
+            </div>
+        </div>
+
+        <nz-table class="sd-main-table has-detail table-ellipsis" [nzLoading]="tableData.loading"
+                  [nzFrontPagination]="false"
+                  [nzShowPagination]="false" [nzData]="tableData.data">
+            <thead (nzSortChange)="sort($event)" nzSingleSort>
+            <tr>
+                <th nzShowSort="{{column.isSort}}" nzSortKey="{{column.field}}" *ngFor="let column of columns">
+                    {{column.title}}
+                </th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of tableData.data;let i = index">
+                <td width="10%">{{columns[0].field | fieldRender : columns[0]:data}}</td>
+                <td width="8%">{{columns[1].field | fieldRender : columns[1]:data}}</td>
+                <td
+                    width="10%">
+                    <div id="changeColor" (click)="showDetail(data)">{{columns[2].field | fieldRender :
+                        columns[2]:data}}
+                    </div>
+                </td>
+                <td width="8%">{{columns[3].field | fieldRender : columns[3]:data}}</td>
+                <td width="8%">{{columns[4].field | fieldRender : columns[4]:data}}</td>
+                <td width="8%">{{columns[5].field | fieldRender : columns[5]:data}}</td>
+                <td width="8%"><img _ngcontent-c1="" class="user-avatar" src="{{columns[6].field | statusRender :
+                    columns[6]:data}}">{{columns[6].field | fieldRender :
+                    columns[6]:data}}
+                </td>
+                <td width="8%">{{columns[7].field | fieldRender : columns[7]:data}}</td>
+                <td width="12%">{{columns[8].field | fieldRender : columns[8]:data}}</td>
+                <td width="21%">
+                    <a class="zt-m5" (click)="detail(data)">详情</a>
+                    <a class="zt-m5" (click)="update(data)">修改</a>
+                    <a class="zt-m5" (click)="delete(data);">删除</a>
+                    <a class="zt-m5" (click)="refreshLogin(data);">刷新状态</a>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+        <div class="sd-table-foot">
+            <zt-pager [nzTotal]="tableData.total" [(nzPageIndex)]="tableData.curpage"
+                      [(nzPageSize)]="tableData.pagesize"
+                      (nzPageIndexChange)="loadTableData()" (nzPageSizeChange)="loadTableData()">
+            </zt-pager>
+        </div>
+    </div>
+</div>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="服务器描述展示" (nzOnCancel)="handleCancel()" (nzOnOk)="handleCancel()"
+          [nzWidth]="500"
+          [nzCancelText]="null">
+    <p>{{contentDetail}}</p>
+</nz-modal>
+<nz-modal [(nzVisible)]="natureVisible" nzTitle="服务器性能实时查询展示" (nzOnCancel)="natureCancel()" (nzOnOk)="natureCancel()"
+          [nzWidth]="500"
+          [nzCancelText]="null">
+    <p *ngFor="let content of naturelogDetail">{{content}}</p>
+</nz-modal>

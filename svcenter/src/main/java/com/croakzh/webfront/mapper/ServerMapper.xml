@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.croakzh.webfront.mapper.ServerMapper">
+
+    <sql id="selectSQL">
+		serverid, groupid, host, hostname, description, sshport, sshname, sshpwd, status, addtime, updatetime, shells
+	</sql>
+
+    <sql id="contentSQL">
+        a.serverid, a.groupid, a.host, a.hostname, a.description, a.sshport, a.sshname, a.sshpwd, a.status, a.shells,
+        a.addtime,
+        a.updatetime, b.groupname
+    </sql>
+
+    <sql id="whereSQL">
+        where 1=1
+        <if test="serverid != null ">
+            <![CDATA[
+				and a.serverid = #{serverid}
+			]]>
+        </if>
+        <if test="groupid != null ">
+            <![CDATA[
+				and a.groupid = #{groupid}
+			]]>
+        </if>
+        <if test="host != null ">
+            <![CDATA[
+				and a.host = #{host}
+			]]>
+        </if>
+        <if test="hostname != null ">
+            <![CDATA[
+				and a.hostname = #{hostname}
+			]]>
+        </if>
+        <if test="description != null ">
+            <![CDATA[
+				and a.description = #{description}
+			]]>
+        </if>
+        <if test="sshport != null ">
+            <![CDATA[
+				and a.sshport = #{sshport}
+			]]>
+        </if>
+        <if test="sshname != null ">
+            <![CDATA[
+				and a.sshname = #{sshname}
+			]]>
+        </if>
+        <if test="sshpwd != null ">
+            <![CDATA[
+				and a.sshpwd = #{sshpwd}
+			]]>
+        </if>
+        <if test="status != null ">
+            <![CDATA[
+				and a.status = #{status}
+			]]>
+        </if>
+        <if test="shells != null ">
+            <![CDATA[
+				and a.shells = #{shells}
+			]]>
+        </if>
+        <if test="addtime != null ">
+            <![CDATA[
+				and a.addtime = #{addtime}
+			]]>
+        </if>
+        <if test="updatetime != null ">
+            <![CDATA[
+				and a.updatetime = #{updatetime}
+			]]>
+        </if>
+    </sql>
+
+    <select id="countServers" resultType="Integer" parameterType="ServerPo">
+        select count(*) from mt_server a left join mt_group b on a.groupid = b.groupid
+        <include refid="whereSQL">
+        </include>
+        <if test="term != null and '' != term">
+            <![CDATA[
+              and (a.hostname like concat(concat('%', #{term}),'%'))
+			]]>
+        </if>
+    </select>
+
+    <select id="findAllServers" resultType="ServerPo" parameterType="ServerPo">
+        select
+        <include refid="contentSQL"/>
+        from mt_server a left join mt_group b on a.groupid = b.groupid
+    </select>
+
+    <select id="findServersByPage" resultType="ServerPo" parameterType="ServerPo">
+        select
+        <include refid="contentSQL"/>
+        from mt_server a left join mt_group b on a.groupid = b.groupid
+        <include refid="whereSQL"/>
+        <if test="term != null and '' != term">
+            <![CDATA[
+              and (a.hostname like concat(concat('%', #{term}),'%'))
+			]]>
+        </if>
+        <choose>
+            <when test="sortord != null and '' != sortord">
+                order by a.${sortord}
+            </when>
+            <otherwise>
+                order by a.serverid desc
+            </otherwise>
+        </choose>
+        <if test="pagestart != null and pagesize != null">
+            limit #{pagestart}, #{pagesize}
+        </if>
+    </select>
+
+    <select id="getServer" resultType="ServerPo" parameterType="Integer">
+        select
+        <include refid="selectSQL"/>
+        from mt_server a
+        where a.serverid = #{serverid}
+    </select>
+
+    <insert id="addServer" parameterType="ServerPo">
+        insert into mt_server
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serverid != null ">serverid,</if>
+            <if test="groupid != null ">groupid,</if>
+            <if test="host != null ">host,</if>
+            <if test="hostname != null ">hostname,</if>
+            <if test="description != null ">description,</if>
+            <if test="sshport != null ">sshport,</if>
+            <if test="sshname != null ">sshname,</if>
+            <if test="sshpwd != null ">sshpwd,</if>
+            <if test="status != null ">status,</if>
+            <if test="shells != null ">shells,</if>
+            <if test="addtime != null ">addtime,</if>
+            <if test="updatetime != null ">updatetime,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serverid != null ">#{serverid,jdbcType=INTEGER},</if>
+            <if test="groupid != null ">#{groupid,jdbcType=INTEGER},</if>
+            <if test="host != null ">#{host,jdbcType=VARCHAR},</if>
+            <if test="hostname != null ">#{hostname,jdbcType=VARCHAR},</if>
+            <if test="description != null ">#{description,jdbcType=VARCHAR},</if>
+            <if test="sshport != null ">#{sshport,jdbcType=INTEGER},</if>
+            <if test="sshname != null ">#{sshname,jdbcType=VARCHAR},</if>
+            <if test="sshpwd != null ">#{sshpwd,jdbcType=VARCHAR},</if>
+            <if test="status != null ">#{status,jdbcType=TINYINT},</if>
+            <if test="shells != null ">#{shells,jdbcType=VARCHAR},</if>
+            <if test="addtime != null ">#{addtime,jdbcType=VARCHAR},</if>
+            <if test="updatetime != null ">#{updatetime,jdbcType=VARCHAR},</if>
+        </trim>
+        <selectKey keyProperty="serverid" resultType="Integer" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="updateServer" parameterType="ServerPo">
+        update mt_server
+        <trim prefix="set" suffixOverrides="," suffix=" where serverid = #{serverid} ">
+            <if test="serverid != null">
+                <![CDATA[
+					serverid = #{serverid,jdbcType=INTEGER},
+				]]>
+            </if>
+            <if test="groupid != null">
+                <![CDATA[
+					groupid = #{groupid,jdbcType=INTEGER},
+				]]>
+            </if>
+            <if test="host != null">
+                <![CDATA[
+					host = #{host,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="hostname != null">
+                <![CDATA[
+					hostname = #{hostname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="description != null">
+                <![CDATA[
+					description = #{description,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="sshport != null">
+                <![CDATA[
+					sshport = #{sshport,jdbcType=INTEGER},
+				]]>
+            </if>
+            <if test="sshname != null">
+                <![CDATA[
+					sshname = #{sshname,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="sshpwd != null">
+                <![CDATA[
+					sshpwd = #{sshpwd,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="status != null">
+                <![CDATA[
+					status = #{status,jdbcType=TINYINT},
+				]]>
+            </if>
+            <if test="shells != null">
+                <![CDATA[
+					shells = #{shells,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="addtime != null">
+                <![CDATA[
+					addtime = #{addtime,jdbcType=VARCHAR},
+				]]>
+            </if>
+            <if test="updatetime != null">
+                <![CDATA[
+					updatetime = #{updatetime,jdbcType=VARCHAR},
+				]]>
+            </if>
+        </trim>
+    </update>
+
+    <delete id="deleteServer" parameterType="Integer">
+		delete from mt_server
+		where serverid= #{serverid}
+	</delete>
+
+</mapper>

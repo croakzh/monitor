@@ -1,0 +1,39 @@
+<div class="sd-head">
+    <div class="sd-title-s">监控管理工具 / 服务器组配置</div>
+    <div class="sd-title-m">新增服务器组配置</div>
+</div>
+<div class="sd-body">
+    <div class="animated sd-content">
+        <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="t_groupname" nzRequired>组名
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="t_groupname" id="t_groupname" placeholder="必填,最大长度为64">
+                    <nz-form-explain *ngIf="form.get('t_groupname').dirty && form.get('t_groupname').errors">
+                        <ng-container *ngIf="form.get('t_groupname').hasError('required')">
+                            请输入组名
+                        </ng-container>
+                        <ng-container *ngIf="form.get('t_groupname').hasError('maxlength')">
+                            组名长度不能超过64
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="t_description">描述
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <textarea formControlName="t_description" id="t_description" nz-input rows="6"
+                              placeholder="请输入描述"></textarea>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item nz-row style="margin-bottom:8px;">
+                <nz-form-control [nzOffset]="20" [nzSpan]="12">
+                    <button nz-button nzType="primary">提交</button>
+                    <button nz-button (click)="back()">取消</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="sd-head">
+    <div class="sd-title-s">监控管理工具 / 服务器应用配置</div>
+    <div class="sd-title-m">修改服务器应用配置</div>
+</div>
+<div class="sd-body">
+    <div class="animated sd-content">
+        <form nz-form [formGroup]="form">
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="applicationname" nzRequired>应用名称
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="applicationname" id="applicationname" placeholder="必填,最大长度为32">
+                    <nz-form-explain *ngIf="form.get('applicationname').dirty && form.get('applicationname').errors">
+                        <ng-container *ngIf="form.get('applicationname').hasError('required')">
+                            请输入应用名称
+                        </ng-container>
+                        <ng-container *ngIf="form.get('applicationname').hasError('maxlength')">
+                            应用名称长度不能超过32
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="developpath" nzRequired>应用部署路径
+                </nz-form-label>
+                <nz-form-control [nzSm]="8" [nzXs]="30">
+                    <div nz-row [nzGutter]="8">
+                        <div nz-col [nzSpan]="18">
+                            <input nz-input formControlName="developpath" id="developpath" placeholder="必填,最大长度为64">
+                        </div>
+                        <div nz-col [nzSpan]="6">
+                            <button nz-button nzType="dashed" (click)="test()" [nzLoading]="loadingTest">
+                                应用测试
+                            </button>
+                        </div>
+                    </div>
+                    <nz-form-explain *ngIf="form.get('developpath').dirty && form.get('developpath').errors">
+                        <ng-container *ngIf="form.get('developpath').hasError('required')">
+                            请输入应用部署路径
+                        </ng-container>
+                        <ng-container *ngIf="form.get('developpath').hasError('maxlength')">
+                            应用部署路径长度不能超过64
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="description" nzRequired>描述
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <textarea formControlName="description" id="description" nz-input rows="6"
+                              placeholder="最大长度为255"></textarea>
+                    <nz-form-explain *ngIf="form.get('description').dirty && form.get('description').errors">
+                        <ng-container *ngIf="form.get('description').hasError('required')">
+                            请输入描述
+                        </ng-container>
+                        <ng-container *ngIf="form.get('description').hasError('maxlength')">
+                            描述长度不能超过255
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="serverid" nzRequired>服务器选择
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <nz-select name="select-error" formControlName="serverid">
+                        <nz-option nzCustomContent *ngFor="let option of servers" [nzValue]="option.serverid"
+                                   [nzLabel]="option.hostname">
+                            <img _ngcontent-c1="" class="user-avatar" src="/assets/img/green.png"
+                                 *ngIf="option.status == 0">
+                            <img _ngcontent-c1="" class="user-avatar" src="/assets/img/red.png"
+                                 *ngIf="option.status == 1">
+                            {{option.hostname}}
+                        </nz-option>
+                    </nz-select>
+                    <nz-form-explain *ngIf="form.get('serverid').dirty && form.get('serverid').errors">
+                        <ng-container *ngIf="form.get('serverid').hasError('required')">
+                            请选择相应服务器
+                        </ng-container>
+                    </nz-form-explain>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item nz-row style="margin-bottom:8px;">
+                <nz-form-control [nzOffset]="20" [nzSpan]="12">
+                    <button nz-button nzType="primary" (click)="submitForm()">提交</button>
+                    <button nz-button (click)="back()">取消</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+</div>

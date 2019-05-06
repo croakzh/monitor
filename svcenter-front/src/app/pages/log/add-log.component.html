@@ -1,0 +1,44 @@
+<div class="sd-head">
+    <div class="sd-title-s">监控管理工具 / 应用日志监控</div>
+    <div class="sd-title-m">新增应用日志监控</div>
+</div>
+<div class="sd-body">
+    <div class="animated sd-content">
+        <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="t_detail" >日志详情
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="t_detail" id="t_detail" placeholder="请输入日志详情">
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="t_hostname" >服务器名
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="t_hostname" id="t_hostname" placeholder="请输入服务器名">
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="t_host" >服务器ip
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="t_host" id="t_host" placeholder="请输入服务器ip">
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSm]="8" [nzXs]="30" nzFor="t_applicationname" >应用名称
+                </nz-form-label>
+                <nz-form-control [nzSm]="6" [nzXs]="30">
+                    <input nz-input formControlName="t_applicationname" id="t_applicationname" placeholder="请输入应用名称">
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item nz-row style="margin-bottom:8px;">
+                <nz-form-control [nzOffset]="20" [nzSpan]="12">
+                    <button nz-button nzType="primary">提交</button>
+                    <button nz-button (click)="back()">取消</button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </div>
+</div>

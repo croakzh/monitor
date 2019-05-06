@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="mysqlgenerator" targetRuntime="MyBatis3">
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://120.77.253.177:3306/svcenter"
+                        userId="root"
+                        password="mima1234" />
+
+        <javaModelGenerator targetPackage="com.croakzh.repository.model" targetProject="src/main/java" />
+
+        <sqlMapGenerator targetPackage="com.croakzh.repository.mapper" targetProject="src/main/java" />
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.croakzh.repository.mapper" targetProject="src/main/java" />
+
+        <table tableName="sv_servers"/>
+
+    </context>
+
+</generatorConfiguration>
