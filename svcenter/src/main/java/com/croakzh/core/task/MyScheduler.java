@@ -26,7 +26,7 @@ public class MyScheduler {
     private void startCheckJob(Scheduler scheduler) throws SchedulerException {
         JobDetail job = JobBuilder.newJob(ServerCheckTask.class).withIdentity("serverCheckTask").storeDurably().build();
 
-        // 每1分钟检查一次服务器连接
+        // 每3分钟检查一次服务器连接
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0 0/3 * * * ?");
         CronTrigger cronTrigger =
                 TriggerBuilder.newTrigger().withDescription("serverCheckTrigger").withSchedule(scheduleBuilder).build();

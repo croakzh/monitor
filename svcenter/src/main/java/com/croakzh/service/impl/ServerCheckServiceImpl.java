@@ -105,12 +105,12 @@ public class ServerCheckServiceImpl implements IServerCheckService {
             if (StringUtils.isNotEmpty(message3)) {
                 application.setAppstatus(Byte.valueOf("3"));
             }
-            List<String> res2 = ShellUtils.execCmd(session, "cd " + application.getDeveloppath() + " && sh v.sh");
+            List<String> res2 = ShellUtils.execCmd(session, "cd " + application.getDeveloppath() + " && " + Constants.SHELL_VSH);
             for (String line : res2) {
-                if (line.contains("running")) {
+                if (line.contains(Constants.RUNNING_STRING)) {
                     applicationPo.setAppstatus(Byte.valueOf("0"));
                 }
-                if (line.contains("stopped")) {
+                if (line.contains(Constants.STOP_STRING)) {
                     applicationPo.setAppstatus(Byte.valueOf("1"));
                 }
             }
