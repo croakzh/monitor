@@ -96,8 +96,6 @@ public class ServerCheckServiceImpl implements IServerCheckService {
     }
 
     private void refreshApplicationStatus(ApplicationPo application) {
-        ApplicationPo applicationPo = new ApplicationPo();
-        applicationPo.setApplicationid(application.getApplicationid());
         try {
             Session session = ActionContext.getConnections().get(application.getHost());
             String message3 = ValidUtils.verifyDevelopPath(session, application.getDeveloppath(),
@@ -108,17 +106,18 @@ public class ServerCheckServiceImpl implements IServerCheckService {
             List<String> res2 = ShellUtils.execCmd(session, "cd " + application.getDeveloppath() + " && " + Constants.SHELL_VSH);
             for (String line : res2) {
                 if (line.contains(Constants.RUNNING_STRING)) {
-                    applicationPo.setAppstatus(Byte.valueOf("0"));
+                    application.setAppstatus(Byte.valueOf("0"));
                 }
                 if (line.contains(Constants.STOP_STRING)) {
-                    applicationPo.setAppstatus(Byte.valueOf("1"));
+                    application.setAppstatus(Byte.valueOf("1"));
                 }
             }
-            applicationService.updateApplication(applicationPo);
+            applicationService.updateApplication(application);
         } catch (Exception e) {
+            e.printStackTrace();
             // 连接执行报错，则重置状态
-            applicationPo.setAppstatus(Byte.valueOf("3"));
-            applicationService.updateApplication(applicationPo);
+            application.setAppstatus(Byte.valueOf("3"));
+            applicationService.updateApplication(application);
         }
     }
 
