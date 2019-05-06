@@ -23,7 +23,6 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <ganymed-ssh2.version>build210</ganymed-ssh2.version>
-        <sigar.version>1.6.4</sigar.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
         <jsch.version>0.1.54</jsch.version>
         <oshi.version>3.10.0</oshi.version>
@@ -138,11 +137,11 @@
             <version>${jsch.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.hyperic</groupId>
-            <artifactId>sigar</artifactId>
-            <version>${sigar.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.hyperic</groupId>-->
+            <!--<artifactId>sigar</artifactId>-->
+            <!--<version>${sigar.version}</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.github.oshi</groupId>
