@@ -69,9 +69,9 @@
                     <nz-select name="select-error" formControlName="t_serverid">
                         <nz-option nzCustomContent *ngFor="let option of servers" [nzValue]="option.serverid"
                                    [nzLabel]="option.hostname">
-                            <img _ngcontent-c1="" class="user-avatar" src="/assets/img/green.png"
+                            <img _ngcontent-c1="" class="user-avatar" src="assets/img/green.png"
                                  *ngIf="option.status == 0">
-                            <img _ngcontent-c1="" class="user-avatar" src="/assets/img/red.png"
+                            <img _ngcontent-c1="" class="user-avatar" src="assets/img/red.png"
                                  *ngIf="option.status == 1">
                             {{option.hostname}}
                         </nz-option>
