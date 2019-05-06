@@ -8,11 +8,92 @@
     <!--<link rel="stylesheet" type="text/css" href="../demo.css">-->
     <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.min.js"></script>
     <script type="text/javascript" src="/jquery-easyui-1.5.2/jquery.easyui.min.js"></script>
+    <style type="text/css">
+        .tree-icon.tree-folder.tree-folder-open, .tree-icon.tree-file,
+        .tree-icon.tree-folder {
+            display: none;
+        }
+
+        .grid-action {
+            padding-right: 100px;
+            position: relative;
+        }
+
+        .tree-action {
+            position: absolute;
+            top: 78px;
+            left: 120px;
+        }
+
+        .large-btn .l-btn-text, .bill-fun-btn .l-btn-text {
+            width: 120px;
+        }
+
+        .ul-all {
+            border: 1px solid #BABABA;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            display: none;
+            margin-left: 10px;
+        }
+
+        .ul-all li {
+            line-height: 19px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+
+        .ul-all li:last-child {
+            border-bottom: none;
+        }
+
+        .ul-all li:hover {
+            background: #eee;
+            color: #3498DB;
+        }
+
+        .menu-shadow, #mm {
+            padding-top: 0 !important;
+            padding-right: 0 !important;
+            padding-left: 0 !important;
+        }
+
+        /* #hideBtnCon .l-btn-left{
+            border:1px solid #DBDBDB;
+            background: -webkit-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+            background: -moz-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+            background: -o-linear-gradient(top,#ffffff 0,#eeeeee 100%);
+            background: linear-gradient(to bottom,#ffffff 0,#eeeeee 100%);
+            background-repeat: repeat-x;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff,endColorstr=#eeeeee,GradientType=0);
+            -moz-border-radius: 5px 5px 5px 5px;
+            -webkit-border-radius: 5px 5px 5px 5px;
+            border-radius: 5px 5px 5px 5px;
+        } */
+        #hideBtnCon .l-btn-plain {
+            border-width: 1px;
+            padding: 0px;
+            background: -webkit-linear-gradient(top, #ffffff 0, #eeeeee 100%);
+            background: -moz-linear-gradient(top, #ffffff 0, #eeeeee 100%);
+            background: -o-linear-gradient(top, #ffffff 0, #eeeeee 100%);
+            background: linear-gradient(to bottom, #ffffff 0, #eeeeee 100%);
+            background-repeat: repeat-x;
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#eeeeee, GradientType=0);
+        }
+
+        #hideBtnCon .l-btn-plain:hover {
+            border: 1px solid #fff;
+        }
+
+        #hideBtnCon .l-btn-plain:hover .l-btn-left {
+            border: none;
+            background: #e5ebfb
+        }
+    </style>
 </head>
 <body>
-<h2>Basic LinkButton</h2>
-<p>Buttons can be created from <a> or <button> elements.</p>
-<div style="margin:10px 0 40px 0;"></div>
 <p>Basic Buttons</p>
 <div style="padding:5px 0;">
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add'">Add</a>
@@ -27,6 +108,140 @@
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-print'" style="width:80px">Print</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-reload'" style="width:80px">Reload</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-help'" style="width:80px">Help</a>
+</div>
+
+<div class="tree-action">
+			<span style='padding-right: 3px; display: inline-block;'>
+			    <saas:A perid="268" href="javascript:;" class="get-btn-common" title='添加' style='cursor: pointer;' onclick="addTreeNode();"></saas:A>
+			</span>
+    <span style='padding-right: 3px; display: inline-block;'>
+			    <saas:A perid="268" href="javascript:;" class="add-btn-common" title='修改' style='cursor: pointer;' onclick="getTreeNodeById('update')"></saas:A>
+			</span>
+    <span style='padding-right: 0px; display: inline-block;'>
+			    <saas:A perid="268" href="javascript:;" class="dele-btn-common" title='删除' style='cursor: pointer;' onclick="deleTreeNode()"></saas:A>
+			</span>
+</div>
+
+<div data-options="region:'west',collapsible:false" title="客户片区"
+     style="width: 200px;">
+
+    <ul id="consumerAreaTree" class="easyui-tree tree-common "></ul>
+</div>
+<div data-options="region:'north'" class="north-common" style="height:100px;">
+    <div class="grid-action" style='padding:10px 0 0 0;'>
+        <form id="queryForm">
+            <div class="search-careful search-box"  style='margin-top:0; height:30px;'>
+                <div style='float:left;margin-right:10px;'>
+                    <label style="width:60px;" for="docstateId">客户状态:</label>
+                    <select class="easyui-combobox select-common" style="height: 30px; width: 150px;" id="docstateId" name="docstate" data-options="editable:false">
+                        <option value="0">只展示可用客户</option>
+                        <option value="1">只展示停用客户</option>
+                        <option value="">全部</option>
+                    </select>
+                </div>
+                <div style='float:left;margin-right:10px;'>
+
+                    <label style="width:40px;" for="cgroupid">渠道:</label>
+                    <select class="easyui-combobox select-common" name="groupId" id="cgroupid" style="height:30px;width:150px;"data-options="editable:false">
+                        <option value="">请选择</option>
+                        <c:forEach items="${groupMap}" var="item">
+                            <option value="${item.key}">${item.value}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div style='float:left;margin-right:10px;'>
+                    <label style="width:40px;" for="cgroupid">等级:</label>
+                    <select class="easyui-combobox select-common" name="gradeId" id="cgradeid" style="height:30px;width:150px;"data-options="editable:false">
+                        <option value="">请选择</option>
+                        <c:forEach items="${consumerGradeMap}" var="item">
+                            <option value="${item.key}">${item.value}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div style='float:left;margin-right:10px;'>
+
+                    <label style="width:40px;" for="cgroupid">业务员:</label>
+                    <select class="easyui-combobox select-common" name="groupId" id="cgroupid" style="height:30px;width:150px;"data-options="editable:false">
+                        <option value="">请选择</option>
+                        <c:forEach items="${groupMap}" var="item">
+                            <option value="${item.key}">${item.value}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div style='float:left;margin-right:10px;'>
+                    <input name="queryText" id="nameid"  class="easyui-textbox" style="width: 300px; height: 30px;"/>
+                </div>
+                <div style='float:left;'>
+                    <button type="button" href="javascript:void(0);" class="easyui-linkbutton select-blue-btn" style="margin-top:0px;" onclick="searchHandler();">查询</button>
+                </div>
+            </div>
+            <div class="search-careful search-box"  style='margin-top:0; height:30px;'>
+                <div style="">
+                    <label style="">创建时间:</label>
+                    <input id="dateStartPrefix" name="dateStartPrefix" class="easyui-datebox"
+                           data-options="editable:false,value:new Date().pattern('yyyy-MM-dd')"
+                           style="width:100px;height:30px;" type="text" />
+                    <input id="dateStartSuffix" name="dateStartSuffix" class="easyui-timespinner"
+                           data-options="showSeconds:false,value:'00:00'" style="width:60px;height:30px;" type="text" />
+                    -
+                    <input id="dateEndPrefix" name="dateEndPrefix" class="easyui-datebox"
+                           data-options="editable:false,value:new Date().pattern('yyyy-MM-dd')"
+                           style="width:100px;height:30px;" type="text" />
+                    <input id="dateEndSuffix" name="dateEndSuffix" class="easyui-timespinner"
+                           data-options="showSeconds:false,value:'23:59'" style="width:60px;height:30px;" type="text" />
+
+                </div>
+            </div>
+            <div style="padding-top:0; float:right;">
+                <div id='hideBtnCon'>
+                    <!-- <saas:A perid="268" href="javascript:;" id='ConDisplayBtn' style="float:none; margin-right:60px;" class="easyui-linkbutton common-btn"  >批量操作</saas:A>
+                    <ul class="ul-all" id="mm">
+                        <li onclick="SAAS.commonDoc.del();">批量删除</li>
+                        <li onclick="updatePricePlan();">批量指定价格方案</li>
+                        <li onclick="showUpdateAreaPage();">批量指定片区</li>
+                        <li onclick="updateConsumerGrade();">批量指定客户等级</li>
+                    </ul>-->
+                    <saas:A perid="268" href="javascript:;" id='mb' class="easyui-menubutton common-btn"  data-options="menu:'#mm'">批量操作</saas:A>
+                    <div id="mm" data-options="noline:true">
+                        <div>批量删除</div>
+                        <!-- 使用新的价格体系，不再使用客户指定价格方案方法 -->
+                        <!-- <div>批量指定价格方案</div>    -->
+                        <div>批量指定片区</div>
+                        <div>批量指定客户等级</div>
+                        <div>批量指定付款方式</div>
+                    </div>
+                </div>
+                <!--    	<a href="javascript:void(0)" id="mb" class="easyui-menubutton"   data-options="menu:'#mm',iconCls:'icon-edit'">Edit</a>
+                       <div id="mm" style="width:150px;">
+                           <div data-options="iconCls:'icon-undo'">Undo</div>
+                           <div data-options="iconCls:'icon-redo'">Redo</div>
+                           <div class="menu-sep"></div>
+                           <div>Cut</div>
+                           <div>Copy</div>
+                           <div>Paste</div>
+                           <div class="menu-sep"></div>
+                           <div data-options="iconCls:'icon-remove'">Delete</div>
+                           <div>Select All</div>
+                       </div> -->
+
+            </div>
+            <!-- 增加'客户状态'下拉项 去除多选框 -->
+            <!--<label style="float:right;margin-top:7px;"><input name="docstate" id="docstateId" type="checkbox" class="easyui-linkbutton common-btn" onclick="searchHandler();" /> 展示停用客户</label>-->
+        </form>
+        <!-- 客户档案导出
+       <form id="exportConsumers" method="post" action="/saas/erp/doc/consumer/exportConsumers">
+           <button type="submit" class="button-white">导出</button>
+       </form>
+       -->
+    </div>
+
+
+</div>
+
+<div data-options="region:'center'" class="table-action" style="height:100%;">
+    <div class="grid-common" style="width:100%; height:100%;">
+        <table id="docGrid"></table>
+    </div>
 </div>
 
 </body>

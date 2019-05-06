@@ -12,7 +12,7 @@ export class StatusRender {
         let src = data[fieldName];
         if (fieldName == 'status') {
             if (src == '0') {
-                src = '/assets/img/green.png';
+                src = 'assets/img/green.png';
             } else if (src == '1') {
                 src = '/assets/img/red.png';
             }

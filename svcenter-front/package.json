@@ -5,8 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "nohup ng serve --host 192.168.1.224 --port 10031 --prod --aot > nohup.out &",
-    "build:prod": "ng build --prod --aot  --base-href /svcenter/ --configuration=production",
-    "build:dev": "ng build --prod --aot --base-href /svcenter/"
+    "build:prod": "ng build --prod --aot --extract-licenses=false --base-href /svcenter/ --configuration=production",
+    "build:dev": "ng build --prod --aot --extract-licenses=false --base-href /svcenter/"
   },
   "private": true,
   "dependencies": {
