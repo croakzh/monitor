@@ -67,4 +67,6 @@ public interface IApplicationService {
      * @return 操作成功数
      */
     Integer deleteApplication(Integer applicationid);
+
+    String testApplication(ApplicationPo cond);
 }

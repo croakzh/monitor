@@ -14,17 +14,17 @@ export class StatusRender {
             if (src == '0') {
                 src = 'assets/img/green.png';
             } else if (src == '1') {
-                src = '/assets/img/red.png';
+                src = 'assets/img/red.png';
             }
         } else if(fieldName == 'appstatus') {
             if(src == '0') {
-                src = '/assets/img/green.png';
+                src = 'assets/img/green.png';
             } else if(src == '1') {
-                src = '/assets/img/red.png';
+                src = 'assets/img/red.png';
             } else if(src == '2') {
-                src = '/assets/img/yellow.png';
+                src = 'assets/img/yellow.png';
             } else if(src == '3') {
-                src = '/assets/img/yellow.png';
+                src = 'assets/img/yellow.png';
             }
         }
         return src;

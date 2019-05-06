@@ -140,25 +140,6 @@ public class ApplicationController extends BaseCtrl {
         log.info("Add object to the table : application, the request is : {}", application);
         RSResult result = new RSResult();
         try {
-            Session session = ActionContext.getConnections().get(application.getHost());
-            String message3 = ValidUtils.verifyDevelopPath(session, application.getDeveloppath(),
-                    application.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_VSH));
-            if (StringUtils.isNotEmpty(message3)) {
-                application.setAppstatus(Byte.valueOf("3"));
-            }
-            List<String> res2 = ShellUtils.execCmd(session, "cd " + application.getDeveloppath() + " && sh v.sh");
-            for (String line : res2) {
-                if (line.contains("running")) {
-                    application.setAppstatus(Byte.valueOf("0"));
-                }
-                if (line.contains("stopped")) {
-                    application.setAppstatus(Byte.valueOf("1"));
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        try {
             Integer id = applicationService.addApplication(application);
             result.setResult(0);
             result.setData(id);
@@ -181,25 +162,6 @@ public class ApplicationController extends BaseCtrl {
     public RSResult update(@RequestBody ApplicationPo application) {
         log.info("Update object from the table : application, the request is : {}", application);
         RSResult result = new RSResult();
-        try {
-            Session session = ActionContext.getConnections().get(application.getHost());
-            String message3 = ValidUtils.verifyDevelopPath(session, application.getDeveloppath(),
-                    application.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_VSH));
-            if (StringUtils.isNotEmpty(message3)) {
-                application.setAppstatus(Byte.valueOf("3"));
-            }
-            List<String> res2 = ShellUtils.execCmd(session, "cd " + application.getDeveloppath() + " && sh v.sh");
-            for (String line : res2) {
-                if (line.contains("running")) {
-                    application.setAppstatus(Byte.valueOf("0"));
-                }
-                if (line.contains("stopped")) {
-                    application.setAppstatus(Byte.valueOf("1"));
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
         try {
             applicationService.updateApplication(application);
             result.setResult(0);
@@ -263,28 +225,10 @@ public class ApplicationController extends BaseCtrl {
             return result;
         }
         try {
-            Session session = ActionContext.getConnections().get(server.getHost());
-            String message3 = ValidUtils.verifyDevelopPath(session, cond.getDeveloppath(),
-                    cond.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_VSH));
-            if (StringUtils.isNotEmpty(message3)) {
-                result.setMessage(message3);
-                return result;
-            }
-            List<String> res2 = ShellUtils.execCmd(session, "cd " + cond.getDeveloppath() + " && sh v.sh");
-            for (String line : res2) {
-                if (line.contains("running")) {
-                    result.setResult(0);
-                    result.setMessage("应用测试成功，应用运行中!");
-                    result.setData(0);
-                    return result;
-                }
-                if (line.contains("stopped")) {
-                    result.setResult(0);
-                    result.setData(1);
-                    result.setMessage("应用测试成功，应用未运行！");
-                    return result;
-                }
-            }
+            result.setResult(0);
+            result.setData(1);
+            result.setMessage(applicationService.testApplication(cond));
+            return result;
         } catch (Exception ex) {
             result.setResult(-2);
             result.setMessage("应用测试失败！");
@@ -388,7 +332,7 @@ public class ApplicationController extends BaseCtrl {
 
 
     /**
-     * 停止应用
+     * 发布应用
      *
      * @return {@link RSResult} rest返回值
      */

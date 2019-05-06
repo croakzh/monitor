@@ -1,12 +1,18 @@
 package com.croakzh.webfront.service.impl;
 
+import com.croakzh.core.Constants;
+import com.croakzh.core.context.ActionContext;
+import com.croakzh.core.utils.ShellUtils;
+import com.croakzh.core.utils.ValidUtils;
 import com.croakzh.service.common.BizCache;
 import com.croakzh.service.common.BizErrorCode;
 import com.croakzh.service.common.BizException;
 import com.croakzh.webfront.mapper.ApplicationMapper;
 import com.croakzh.webfront.po.ApplicationPo;
 import com.croakzh.webfront.service.IApplicationService;
+import com.jcraft.jsch.Session;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -120,8 +126,9 @@ public class ApplicationServiceImpl implements IApplicationService {
     @Override
     public Integer addApplication(ApplicationPo application) {
         log.debug("addApplication starting...");
-        Integer retval;
+        Integer retval = 1;
         try {
+            application.setAppstatus(getAppStatus(application));
             application.setAddtime(BizCache.getInstance().getNow());
             retval = applicationMapper.addApplication(application);
             if (retval == 0) {
@@ -135,6 +142,30 @@ public class ApplicationServiceImpl implements IApplicationService {
         return retval;
     }
 
+    private Byte getAppStatus(ApplicationPo application) {
+        Session session = ActionContext.getConnections().get(application.getHost());
+        String message3 = ValidUtils.verifyDevelopPath(session, application.getDeveloppath(),
+                application.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_VSH));
+        if (StringUtils.isNotEmpty(message3)) {
+            return Byte.valueOf("3");
+        }
+        try {
+            List<String> res2 = ShellUtils.execCmd(session,
+                    "cd " + application.getDeveloppath() + " && " + Constants.SHELL_VSH);
+            for (String line : res2) {
+                if (line.contains(Constants.RUNNING_STRING)) {
+                    return Byte.valueOf("0");
+                }
+                if (line.contains(Constants.STOP_STRING)) {
+                    return Byte.valueOf("1");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Byte.valueOf("3");
+    }
+
     /**
      * 更新实体
      *
@@ -144,8 +175,10 @@ public class ApplicationServiceImpl implements IApplicationService {
     @Override
     public Integer updateApplication(ApplicationPo application) {
         log.debug("updateApplication starting...");
-        Integer retval;
+        Integer retval = 1;
         try {
+            application.setAppstatus(getAppStatus(application));
+
             application.setUpdatetime(BizCache.getInstance().getNow());
             retval = applicationMapper.updateApplication(application);
             if (retval == 0) {
@@ -177,5 +210,18 @@ public class ApplicationServiceImpl implements IApplicationService {
         }
         log.debug("deleteApplication end.");
         return retval;
+    }
+
+    @Override
+    public String testApplication(ApplicationPo cond) {
+        Byte status = getAppStatus(cond);
+        if (status.equals(Byte.valueOf("3"))) {
+            return "应用异常";
+        } else if (status.equals(Byte.valueOf("0"))) {
+            return "运行中";
+        } else if (status.equals(Byte.valueOf("1"))) {
+            return "停止中";
+        }
+        return "应用异常";
     }
 }
