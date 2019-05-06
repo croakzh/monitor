@@ -267,8 +267,8 @@ public class ApplicationController extends BaseCtrl {
         }
         try {
             List<String> list = ShellUtils.execCmd(session,
-                    "cd " + cond.getDeveloppath() + " && . " + Constants.SHELL_START);
-            System.out.println("cd " + cond.getDeveloppath() + " && . " + Constants.SHELL_START);
+                    "cd " + cond.getDeveloppath() + " && " + Constants.SHELL_START);
+            log.info("cd " + cond.getDeveloppath() + " && " + Constants.SHELL_START);
             list.forEach(System.out::println);
             ApplicationPo applicationPo = new ApplicationPo();
             applicationPo.setApplicationid(cond.getApplicationid());
@@ -315,7 +315,8 @@ public class ApplicationController extends BaseCtrl {
             return result;
         }
         try {
-            ShellUtils.execCmd(session, "cd " + cond.getDeveloppath() + " && . " + Constants.SHELL_STOP);
+            ShellUtils.execCmd(session, "cd " + cond.getDeveloppath() + " && " + Constants.SHELL_STOP);
+            log.info("cd " + cond.getDeveloppath() + " && " + Constants.SHELL_STOP);
             ApplicationPo applicationPo = new ApplicationPo();
             applicationPo.setApplicationid(cond.getApplicationid());
             applicationPo.setAppstatus(Byte.valueOf("1"));
