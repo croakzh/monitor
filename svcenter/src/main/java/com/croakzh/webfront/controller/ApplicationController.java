@@ -260,7 +260,7 @@ public class ApplicationController extends BaseCtrl {
             return result;
         }
         String message = ValidUtils.verifyDevelopPath(session, cond.getDeveloppath(),
-                cond.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_START));
+                cond.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_ASH));
         if (StringUtils.isNotEmpty(message)) {
             result.setMessage(message);
             return result;
@@ -309,7 +309,7 @@ public class ApplicationController extends BaseCtrl {
             return result;
         }
         String message = ValidUtils.verifyDevelopPath(session, cond.getDeveloppath(),
-                cond.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_STOP));
+                cond.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_ASH));
         if (StringUtils.isNotEmpty(message)) {
             result.setMessage(message);
             return result;

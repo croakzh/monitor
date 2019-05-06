@@ -145,7 +145,7 @@ public class ApplicationServiceImpl implements IApplicationService {
     private Byte getAppStatus(ApplicationPo application) {
         Session session = ActionContext.getConnections().get(application.getHost());
         String message3 = ValidUtils.verifyDevelopPath(session, application.getDeveloppath(),
-                application.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_VSH));
+                application.getDeveloppath().concat(Constants.LINUX_SEPARATOR).concat(Constants.SHELL_ASH));
         if (StringUtils.isNotEmpty(message3)) {
             return Byte.valueOf("3");
         }

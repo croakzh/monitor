@@ -23,9 +23,11 @@ public class Constants {
     public static final String LINUX_SEPARATOR = "/";
 
     // shell name
-    public static final String SHELL_VSH = "a.sh status";
-    public static final String SHELL_START = "a.sh start";
-    public static final String SHELL_STOP = "a.sh stop";
+    public static final String SHELL_VSH = "./a.sh status";
+    public static final String SHELL_START = "./a.sh start";
+    public static final String SHELL_STOP = "./a.sh stop";
+
+    public static final String SHELL_ASH = "a.sh";
 
     public static final String RUNNING_STRING = "is running";
     public static final String STOP_STRING = "is stopped";
