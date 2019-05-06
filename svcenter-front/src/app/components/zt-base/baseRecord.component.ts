@@ -112,8 +112,8 @@ export abstract class BaseRecordComponent<T extends BaseBean> extends BasePageCo
 
     // 加载表格数据
     public doLoadTableData(): Observable<rSResult<T>> {
-        console.log(this.dataService)
-        console.log(this.queryParams)
+        // console.log(this.dataService)
+        // console.log(this.queryParams)
         return this.dataService.selectByPage(this.queryParams);
     }
 

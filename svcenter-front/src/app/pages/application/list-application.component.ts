@@ -92,7 +92,7 @@ export class ListApplicationComponent extends BaseRecordComponent<ApplicationPo>
             this.messageService.info("任务进行中，请耐心等待...");
             return;
         }
-        console.log(start);
+        // console.log(start);
         this.modalService.confirm({
             nzTitle: "确认",
             nzContent: content,
@@ -189,7 +189,7 @@ export class ListApplicationComponent extends BaseRecordComponent<ApplicationPo>
      * 上传之前的检查
      */
     beforeUpload = (file: File) => {
-        console.log(this.fileList.length);
+        // console.log(this.fileList.length);
         if (this.fileList.length == 1) {
             this.messageService.error("只能上传一个文件");
             return false;

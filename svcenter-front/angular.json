@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sundax-management": {
+    "svcenter-front": {
         "root": "",
         "sourceRoot": "src",
         "projectType": "application",
@@ -13,7 +13,7 @@
           "build": {
             "builder": "@angular-devkit/build-angular:browser",
             "options": {
-              "outputPath": "dist/sundax-management",
+              "outputPath": "dist/",
               "index": "src/index.html",
               "main": "src/main.ts",
               "polyfills": "src/polyfills.ts",
@@ -55,18 +55,18 @@
           "serve": {
             "builder": "@angular-devkit/build-angular:dev-server",
             "options": {
-              "browserTarget": "sundax-management:build"
+              "browserTarget": "svcenter-front:build"
             },
             "configurations": {
               "production": {
-                "browserTarget": "sundax-management:build:production"
+                "browserTarget": "svcenter-front:build:production"
               }
             }
           },
           "extract-i18n": {
             "builder": "@angular-devkit/build-angular:extract-i18n",
             "options": {
-              "browserTarget": "sundax-management:build"
+              "browserTarget": "svcenter-front:build"
             }
           },
 
@@ -85,5 +85,5 @@
         }
       }
   },
-  "defaultProject": "sundax-management"
+  "defaultProject": "svcenter-front"
 }
