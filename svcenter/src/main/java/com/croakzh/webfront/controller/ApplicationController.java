@@ -275,12 +275,12 @@ public class ApplicationController extends BaseCtrl {
             applicationPo.setAppstatus(Byte.valueOf("0"));
             applicationService.updateApplication(applicationPo);
             result.setResult(0);
-            result.setMessage("应用启动成功");
+            result.setMessage("已执行应用启动脚本");
             TimeUnit.SECONDS.sleep(10);
         } catch (Exception ex) {
             ex.printStackTrace();
             result.setResult(-2);
-            result.setMessage("应用启动失败！");
+            result.setMessage("应用启动脚本执行失败！");
         }
         log.debug("End start application.");
         return result;
@@ -322,10 +322,10 @@ public class ApplicationController extends BaseCtrl {
             applicationPo.setAppstatus(Byte.valueOf("1"));
             applicationService.updateApplication(applicationPo);
             result.setResult(0);
-            result.setMessage("应用停止成功");
+            result.setMessage("已执行应用停止脚本");
         } catch (Exception ex) {
             result.setResult(-2);
-            result.setMessage("应用停止失败！");
+            result.setMessage("应用停止脚本执行失败！");
         }
         log.debug("End stop application.");
         return result;

@@ -24,8 +24,8 @@ public class Constants {
 
     // shell name
     public static final String SHELL_VSH = "./a.sh status";
-    public static final String SHELL_START = "./a.sh start";
-    public static final String SHELL_STOP = "./a.sh stop";
+    public static final String SHELL_START = "./a.sh start &";
+    public static final String SHELL_STOP = "./a.sh stop &";
 
     public static final String SHELL_ASH = "a.sh";
 
